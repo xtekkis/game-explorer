@@ -27,3 +27,90 @@ body {
 .navbar-logo:hover {
   color: #ffffff;
 }
+
+.game-card {
+  text-decoration: none;
+  color: #e0e0e0;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.game-card:hover {
+  transform: scale(1.03);
+}
+
+.game-card-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.game-card-info {
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.game-card-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.game-card-rating {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.home {
+  padding: 32px;
+}
+
+.search-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid #2a2a2a;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #555;
+}
+
+.search-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background-color: #444;
+  color: #e0e0e0;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.search-btn:hover {
+  background-color: #555;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.status {
+  text-align: center;
+  margin: 40px 0;
+  color: #aaa;
+}

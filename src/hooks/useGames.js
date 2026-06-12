@@ -18,7 +18,8 @@ export function useGames(search = '', genre = '') {
 
         const res = await fetch(url)
         const data = await res.json()
-        setGames(data.results)
+        const filtered = data.results.filter(g => g.background_image && g.rating > 0)
+        setGames(filtered)
       } catch (err) {
         setError(err.message)
       } finally {

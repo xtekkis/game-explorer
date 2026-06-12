@@ -1,16 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import GameCard from '../components/GameCard'
 
 function Home() {
-  const [search, setSearch] = useState('')
-  const [query, setQuery] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('search') || ''
+  const [search, setSearch] = useState(query)
+
+  useEffect(() => {
+    setSearch(query)
+  }, [query])
 
   const { games, loading, error } = useGames(query)
 
   const handleSearch = (e) => {
     e.preventDefault()
-    setQuery(search)
+    if (search) {
+      setSearchParams({ search })
+    } else {
+      setSearchParams({})
+    }
   }
 
   return (

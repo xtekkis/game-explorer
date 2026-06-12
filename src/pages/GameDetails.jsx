@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const API_KEY = import.meta.env.VITE_RAWG_API_KEY
 const BASE_URL = 'https://api.rawg.io/api'
 
 function GameDetails() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [game, setGame] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -23,7 +24,7 @@ function GameDetails() {
 
   return (
     <div className="details">
-      <Link to="/" className="back-btn">← Back</Link>
+      <button onClick={() => navigate(-1)} className="back-btn">← Back</button>
       <div className="details-hero">
         <img src={game.background_image} alt={game.name} className="details-img" />
         <div className="details-info">

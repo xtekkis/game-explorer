@@ -2,25 +2,33 @@ import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import GameCard from '../components/GameCard'
+import GenreList from '../components/GenreList'
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = searchParams.get('search') || ''
+  const genre = searchParams.get('genre') || ''
   const [search, setSearch] = useState(query)
 
   useEffect(() => {
     setSearch(query)
   }, [query])
 
-  const { games, loading, error } = useGames(query)
+  const { games, loading, error } = useGames(query, genre)
 
   const handleSearch = (e) => {
     e.preventDefault()
-    if (search) {
-      setSearchParams({ search })
-    } else {
-      setSearchParams({})
-    }
+    const params = {}
+    if (search) params.search = search
+    if (genre) params.genre = genre
+    setSearchParams(params)
+  }
+
+  const handleGenre = (g) => {
+    const params = {}
+    if (query) params.search = query
+    if (g) params.genre = g
+    setSearchParams(params)
   }
 
   return (
@@ -35,6 +43,8 @@ function Home() {
         />
         <button type="submit" className="search-btn">Search</button>
       </form>
+
+      <GenreList selected={genre} onSelect={handleGenre} />
 
       {loading && <p className="status">Loading...</p>}
       {error && <p className="status">Something went wrong.</p>}

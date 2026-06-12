@@ -188,3 +188,32 @@ body {
   line-height: 1.7;
   max-width: 860px;
 }
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.genre-btn {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  color: #aaa;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.genre-btn:hover {
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+.genre-btn.active {
+  background-color: #444;
+  border-color: #666;
+  color: #fff;
+}

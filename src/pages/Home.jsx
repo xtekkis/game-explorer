@@ -25,6 +25,13 @@ function Home() {
     setSearchParams(params)
   }
 
+  const handleClear = () => {
+    setSearch('')
+    const params = {}
+    if (genre) params.genre = genre
+    setSearchParams(params)
+  }
+
   const handleGenre = (g) => {
     const params = {}
     if (query) params.search = query
@@ -35,13 +42,18 @@ function Home() {
   return (
     <div className="home">
       <form onSubmit={handleSearch} className="search-bar">
-        <input
-          type="text"
-          placeholder="Search games..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
+        <div className="search-input-wrapper">
+          <input
+            type="text"
+            placeholder="Search games..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-input"
+          />
+          {search && (
+            <button type="button" className="clear-btn" onClick={handleClear}>✕</button>
+          )}
+        </div>
         <button type="submit" className="search-btn">Search</button>
       </form>
 
@@ -54,6 +66,10 @@ function Home() {
       )}
 
       {!loading && error && <p className="status">Something went wrong.</p>}
+
+      {!loading && !error && games?.length === 0 && (
+        <p className="status">No results found for "{query}"</p>
+      )}
 
       {!loading && (
         <div className="game-grid">

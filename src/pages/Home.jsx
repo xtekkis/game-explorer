@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
 import GameCard from '../components/GameCard'
 import GenreList from '../components/GenreList'
+import SkeletonCard from '../components/SkeletonCard'
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -46,14 +47,21 @@ function Home() {
 
       <GenreList selected={genre} onSelect={handleGenre} />
 
-      {loading && <p className="status">Loading...</p>}
-      {error && <p className="status">Something went wrong.</p>}
+      {loading && (
+        <div className="game-grid">
+          {[...Array(20)].map((_, i) => <SkeletonCard key={i} />)}
+        </div>
+      )}
 
-      <div className="game-grid">
-        {games && games.map(game => (
-          <GameCard key={game.id} game={game} />
-        ))}
-      </div>
+      {!loading && error && <p className="status">Something went wrong.</p>}
+
+      {!loading && (
+        <div className="game-grid">
+          {games && games.map(game => (
+            <GameCard key={game.id} game={game} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

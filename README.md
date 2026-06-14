@@ -1,16 +1,32 @@
-# React + Vite
+# Game Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application for browsing and searching video games using the [RAWG API](https://rawg.io/apidocs).
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[game-explorer-git-main-xtekkis-dev.vercel.app](https://game-explorer-git-main-xtekkis-dev.vercel.app)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Browse top rated games
+- Search games by name
+- Filter games by genre
+- Skeleton loading cards while data is fetched
+- Click any game to view details such as rating, release date, genres, platforms and description
+- Dynamic browser tab titles per page
+- Search and genre state persist in the URL
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Vite
+- React Router DOM
+- RAWG Video Games Database API
+- Deployed on Vercel
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies with `npm install`
+3. Create a `.env` file in the root with your RAWG API key: VITE_RAWG_API_KEY=your_api_key_here
+4. Run the development server with `npm run dev`

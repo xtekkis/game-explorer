@@ -16,8 +16,13 @@ function GameDetails() {
       const data = await res.json()
       setGame(data)
       setLoading(false)
+      document.title = `${data.name} — Game Explorer`
     }
     fetchGame()
+
+    return () => {
+      document.title = 'Game Explorer'
+    }
   }, [id])
 
   if (loading) return <p className="status">Loading...</p>

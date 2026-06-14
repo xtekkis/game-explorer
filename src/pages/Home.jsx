@@ -12,6 +12,10 @@ function Home() {
   const [search, setSearch] = useState(query)
 
   useEffect(() => {
+    document.title = 'Game Explorer'
+  }, [])
+
+  useEffect(() => {
     setSearch(query)
   }, [query])
 

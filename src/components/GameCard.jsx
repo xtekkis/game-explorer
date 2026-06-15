@@ -20,14 +20,16 @@ function GameCard({ game }) {
 
   return (
     <Link to={`/game/${game.id}`} className="game-card">
-      <img
-        src={game.background_image}
-        alt={game.name}
-        className="game-card-img"
-      />
-      <div className="game-card-info">
-        <h3 className="game-card-title">{game.name}</h3>
-        <span className="game-card-rating">⭐ {game.rating}</span>
+      <div className="game-card-img-wrapper">
+        <img
+          src={game.background_image}
+          alt={game.name}
+          className="game-card-img"
+        />
+        <div className="game-card-overlay">
+          <span className="game-card-title">{game.name}</span>
+          <span className="game-card-rating">★ {game.rating}</span>
+        </div>
       </div>
       <div className="game-card-platforms">
         {icons?.map((icon, i) => (

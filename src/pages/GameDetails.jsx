@@ -34,7 +34,7 @@ function GameDetails() {
         <img src={game.background_image} alt={game.name} className="details-img" />
         <div className="details-info">
           <h1 className="details-title">{game.name}</h1>
-          <p className="details-meta">⭐ {game.rating} &nbsp;|&nbsp; Released: {game.released}</p>
+          <p className="details-meta"><span>★ {game.rating}</span> &nbsp;|&nbsp; Released: {game.released}</p>
           <div className="details-genres">
             {game.genres.map(g => (
               <span key={g.id} className="genre-tag">{g.name}</span>

@@ -1,4 +1,4 @@
-function Sidebar({ genres, ordering, platforms, minRating, onChange }) {
+function Sidebar({ genres, ordering, platforms, minRating, onChange, isOpen, onClose }) {
   const genreOptions = [
     { id: 'action', name: 'Action' },
     { id: 'role-playing-games-rpg', name: 'RPG' },
@@ -48,7 +48,9 @@ function Sidebar({ genres, ordering, platforms, minRating, onChange }) {
   }
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'sidebar-open' : ''}`}>
+      <button className="sidebar-close" onClick={onClose}>✕</button>
+
       <div className="sidebar-section">
         <h3 className="sidebar-title">Sort By</h3>
         {sortOptions.map(o => (

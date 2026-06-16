@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useGames } from '../hooks/useGames'
+import { FaSearch } from 'react-icons/fa'
 import GameCard from '../components/GameCard'
 import SkeletonCard from '../components/SkeletonCard'
 import Sidebar from '../components/Sidebar'
 
-function Home() {
+function Home({ sidebarOpen, setSidebarOpen }) {
   const [searchParams, setSearchParams] = useSearchParams()
   const query = searchParams.get('search') || ''
   const ordering = searchParams.get('ordering') || '-rating'
@@ -22,6 +23,15 @@ function Home() {
   useEffect(() => {
     setSearch(query)
   }, [query])
+
+  useEffect(() => {
+    if (sidebarOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => { document.body.style.overflow = '' }
+  }, [sidebarOpen])
 
   const { games, loading, error } = useGames(query, genres, ordering, platforms, minRating)
 
@@ -44,12 +54,18 @@ function Home() {
 
   return (
     <div className="home-layout">
+      {sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
       <Sidebar
         genres={genres}
         ordering={ordering}
         platforms={platforms}
         minRating={minRating}
         onChange={handleFilters}
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
       />
 
       <div className="home-content">
@@ -65,7 +81,9 @@ function Home() {
             {search && (
               <button type="button" className="clear-btn" onClick={handleClear}>✕</button>
             )}
-            <button type="submit" className="search-btn-inside">Search</button>
+            <button type="submit" className="search-btn-inside">
+              <FaSearch />
+            </button>
           </div>
         </form>
 

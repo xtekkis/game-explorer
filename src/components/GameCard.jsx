@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom'
 import { FaWindows, FaPlaystation, FaXbox, FaApple, FaLinux, FaAndroid, FaGamepad } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const platformIcon = (name) => {
   if (name.includes('PC')) return <FaWindows />
@@ -14,17 +14,29 @@ const platformIcon = (name) => {
 }
 
 function GameCard({ game }) {
+  const navigate = useNavigate()
   const icons = game.platforms
     ?.map(p => platformIcon(p.platform.name))
     .filter(Boolean)
 
+  const handleClick = () => {
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        navigate(`/game/${game.id}`)
+      })
+    } else {
+      navigate(`/game/${game.id}`)
+    }
+  }
+
   return (
-    <Link to={`/game/${game.id}`} className="game-card">
+    <div className="game-card" onClick={handleClick} style={{ cursor: 'pointer' }}>
       <div className="game-card-img-wrapper">
         <img
           src={game.background_image}
           alt={game.name}
           className="game-card-img"
+          style={{ viewTransitionName: `game-img-${game.id}` }}
         />
         <div className="game-card-overlay">
           <span className="game-card-title">{game.name}</span>
@@ -36,7 +48,7 @@ function GameCard({ game }) {
           <span key={i} className="platform-icon">{icon}</span>
         ))}
       </div>
-    </Link>
+    </div>
   )
 }
 

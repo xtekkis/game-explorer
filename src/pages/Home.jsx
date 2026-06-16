@@ -73,14 +73,16 @@ function Home() {
 
         {loading && (
           <div className="game-grid">
-            {[...Array(28)].map((_, i) => <SkeletonCard key={i} />)}
+            {[...Array(24)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
         )}
 
         {!loading && error && <p className="status">Something went wrong.</p>}
 
         {!loading && !error && games?.length === 0 && (
-          <p className="status">No results found for "{query}"</p>
+          <p className="status">
+            {query ? `No results found for "${query}"` : 'No games found. Try adjusting your filters.'}
+          </p>
         )}
 
         {!loading && (

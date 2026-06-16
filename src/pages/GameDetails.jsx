@@ -21,7 +21,7 @@ function GameDetails() {
         const gameRes = await fetch(`${BASE_URL}/games/${id}?key=${API_KEY}`)
         const gameData = await gameRes.json()
         setGame(gameData)
-        document.title = `${gameData.name} — Game Explorer`
+        document.title = `${gameData.name} on Game Explorer`
 
         const genre = gameData.genres?.[0]?.slug || ''
         const randomPage = Math.floor(Math.random() * 5) + 1
@@ -90,6 +90,7 @@ function GameDetails() {
                 className="details-video"
                 controls
                 poster={game.background_image}
+                style={{ viewTransitionName: `game-img-${id}` }}
               >
                 <source src={trailer.data?.max || trailer.data?.[480]} type="video/mp4" />
               </video>
@@ -98,6 +99,7 @@ function GameDetails() {
                 src={game.background_image}
                 alt={game.name}
                 className="details-video"
+                style={{ viewTransitionName: `game-img-${id}` }}
               />
             )}
           </div>
@@ -169,8 +171,14 @@ function GameDetails() {
           <div className="details-screenshots-section">
             <h2 className="details-section-title">Screenshots</h2>
             <div className="screenshots-grid">
-              {screenshots.slice(0, 6).map(s => (
-                <img key={s.id} src={s.image} alt="screenshot" className="screenshot-img" />
+              {screenshots.slice(0, 6).map((s, i) => (
+                <img
+                  key={s.id}
+                  src={s.image}
+                  alt="screenshot"
+                  className="screenshot-img"
+                  style={{ animationDelay: `${i * 0.08}s` }}
+                />
               ))}
             </div>
           </div>
@@ -180,11 +188,12 @@ function GameDetails() {
           <div className="details-suggested-section">
             <h2 className="details-section-title">You Might Also Like</h2>
             <div className="suggested-row">
-              {suggested.map(g => (
+              {suggested.map((g, i) => (
                 <div
                   key={g.id}
                   className="suggested-card"
                   onClick={() => navigate(`/game/${g.id}`)}
+                  style={{ animationDelay: `${i * 0.08}s` }}
                 >
                   <img src={g.background_image} alt={g.name} className="suggested-img" />
                   <div className="suggested-overlay">

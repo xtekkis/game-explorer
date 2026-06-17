@@ -973,6 +973,32 @@ body {
 }
 
 /* ============================================
+   LOAD MORE
+   ============================================ */
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.load-more-btn {
+  padding: 12px 40px;
+  border-radius: 10px;
+  border: 0.5px solid rgba(108, 99, 255, 0.4);
+  background-color: rgba(108, 99, 255, 0.1);
+  color: #6c63ff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.load-more-btn:hover {
+  background-color: #6c63ff;
+  color: #fff;
+}
+
+/* ============================================
    TABLET (768px and below)
    ============================================ */
 @media (max-width: 768px) {

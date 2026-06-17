@@ -33,7 +33,7 @@ function Home({ sidebarOpen, setSidebarOpen }) {
     return () => { document.body.style.overflow = '' }
   }, [sidebarOpen])
 
-  const { games, loading, error } = useGames(query, genres, ordering, platforms, minRating)
+  const { games, loading, error, hasMore, loadingMore, loadMore } = useGames(query, genres, ordering, platforms, minRating)
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -91,7 +91,7 @@ function Home({ sidebarOpen, setSidebarOpen }) {
 
         {loading && (
           <div className="game-grid">
-            {[...Array(24)].map((_, i) => <SkeletonCard key={i} />)}
+            {[...Array(28)].map((_, i) => <SkeletonCard key={i} />)}
           </div>
         )}
 
@@ -108,6 +108,20 @@ function Home({ sidebarOpen, setSidebarOpen }) {
             {games && games.map(game => (
               <GameCard key={game.id} game={game} />
             ))}
+          </div>
+        )}
+
+        {loadingMore && (
+          <div className="game-grid" style={{ marginTop: '16px' }}>
+            {[...Array(28)].map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        )}
+
+        {!loading && hasMore && !loadingMore && (
+          <div className="load-more-wrapper">
+            <button className="load-more-btn" onClick={loadMore}>
+              Load More
+            </button>
           </div>
         )}
       </div>

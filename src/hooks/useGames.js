@@ -7,44 +7,50 @@ export function useGames(search = '', genres = [], ordering = '-rating', platfor
   const [games, setGames] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [page, setPage] = useState(1)
+  const [hasMore, setHasMore] = useState(false)
+  const [loadingMore, setLoadingMore] = useState(false)
+
+  useEffect(() => {
+    setPage(1)
+    setGames([])
+  }, [search, genres.join(','), ordering, platforms.join(','), minRating])
 
   useEffect(() => {
     const fetchGames = async () => {
-      setLoading(true)
+      if (page === 1) setLoading(true)
+      else setLoadingMore(true)
+
       try {
-        let url = `${BASE_URL}/games?key=${API_KEY}&page_size=28&ordering=${ordering}`
+        let url = `${BASE_URL}/games?key=${API_KEY}&page_size=28&ordering=${ordering}&page=${page}`
         if (search) url += `&search=${search}`
         if (genres.length) url += `&genres=${genres.join(',')}`
         if (platforms.length) url += `&parent_platforms=${platforms.join(',')}`
 
         const res = await fetch(url)
         const data = await res.json()
-        let filtered = data.results.filter(g => g.background_image)
+        const filtered = data.results.filter(g => g.background_image)
 
-        if (minRating > 0) filtered = filtered.filter(g => g.rating >= minRating)
-
-        if (genres.length > 1) {
-          filtered = filtered.filter(g =>
-            genres.every(genre => g.genres.some(gg => gg.slug === genre))
-          )
+        if (minRating > 0) {
+          const rated = filtered.filter(g => g.rating >= minRating)
+          setGames(prev => page === 1 ? rated : [...prev, ...rated])
+        } else {
+          setGames(prev => page === 1 ? filtered : [...prev, ...filtered])
         }
 
-        if (platforms.length > 1) {
-          filtered = filtered.filter(g =>
-            platforms.every(pid => g.parent_platforms?.some(pp => String(pp.platform.id) === pid))
-          )
-        }
-
-        setGames(filtered)
+        setHasMore(!!data.next)
       } catch (err) {
         setError(err.message)
       } finally {
         setLoading(false)
+        setLoadingMore(false)
       }
     }
 
     fetchGames()
-  }, [search, genres.join(','), ordering, platforms.join(','), minRating])
+  }, [search, genres.join(','), ordering, platforms.join(','), minRating, page])
 
-  return { games, loading, error }
+  const loadMore = () => setPage(prev => prev + 1)
+
+  return { games, loading, error, hasMore, loadingMore, loadMore }
 }
